@@ -5,55 +5,53 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:reown_appkit/modal/widgets/widget_stack/i_widget_stack.dart';
-import 'package:reown_appkit/modal/widgets/widget_stack/widget_stack.dart';
-
-import 'package:reown_core/pairing/utils/json_rpc_utils.dart';
-import 'package:reown_core/store/i_store.dart';
-
-import 'package:reown_appkit/modal/services/coinbase_service/utils/coinbase_utils.dart';
-import 'package:reown_appkit/modal/services/phantom_service/models/phantom_events.dart';
-import 'package:reown_appkit/modal/services/third_party_wallet_service.dart';
-import 'package:reown_appkit/reown_appkit.dart';
-import 'package:reown_appkit/modal/services/phantom_service/i_phantom_service.dart';
-import 'package:reown_appkit/modal/services/phantom_service/phantom_service.dart';
-import 'package:reown_appkit/modal/pages/wallet_features_page.dart';
-import 'package:reown_appkit/modal/services/analytics_service/i_analytics_service.dart';
-import 'package:reown_appkit/modal/services/blockchain_service/models/blockchain_identity.dart';
-import 'package:reown_appkit/modal/services/explorer_service/i_explorer_service.dart';
-import 'package:reown_appkit/modal/services/network_service/i_network_service.dart';
-import 'package:reown_appkit/modal/services/siwe_service/i_siwe_service.dart';
-import 'package:reown_appkit/modal/services/toast_service/i_toast_service.dart';
-import 'package:reown_appkit/modal/services/toast_service/toast_service.dart';
-import 'package:reown_appkit/modal/services/uri_service/i_url_utils.dart';
-import 'package:reown_appkit/modal/services/blockchain_service/i_blockchain_service.dart';
-import 'package:reown_appkit/modal/services/toast_service/models/toast_message.dart';
-import 'package:reown_appkit/modal/services/network_service/network_service.dart';
-import 'package:reown_appkit/modal/services/uri_service/launch_url_exception.dart';
-import 'package:reown_appkit/modal/services/uri_service/url_utils.dart';
-import 'package:reown_appkit/modal/utils/core_utils.dart';
-import 'package:reown_appkit/modal/utils/platform_utils.dart';
 import 'package:reown_appkit/modal/constants/key_constants.dart';
 import 'package:reown_appkit/modal/constants/string_constants.dart';
+import 'package:reown_appkit/modal/i_appkit_modal_impl.dart';
 import 'package:reown_appkit/modal/pages/account_page.dart';
 import 'package:reown_appkit/modal/pages/approve_siwe.dart';
+import 'package:reown_appkit/modal/pages/wallet_features_page.dart';
 import 'package:reown_appkit/modal/services/analytics_service/analytics_service.dart';
+import 'package:reown_appkit/modal/services/analytics_service/i_analytics_service.dart';
 import 'package:reown_appkit/modal/services/analytics_service/models/analytics_event.dart';
+import 'package:reown_appkit/modal/services/blockchain_service/blockchain_service.dart';
+import 'package:reown_appkit/modal/services/blockchain_service/i_blockchain_service.dart';
+import 'package:reown_appkit/modal/services/blockchain_service/models/blockchain_identity.dart';
 import 'package:reown_appkit/modal/services/coinbase_service/coinbase_service.dart';
 import 'package:reown_appkit/modal/services/coinbase_service/i_coinbase_service.dart';
 import 'package:reown_appkit/modal/services/coinbase_service/models/coinbase_data.dart';
 import 'package:reown_appkit/modal/services/coinbase_service/models/coinbase_events.dart';
+import 'package:reown_appkit/modal/services/coinbase_service/utils/coinbase_utils.dart';
 import 'package:reown_appkit/modal/services/explorer_service/explorer_service.dart';
+import 'package:reown_appkit/modal/services/explorer_service/i_explorer_service.dart';
 import 'package:reown_appkit/modal/services/explorer_service/models/redirect.dart';
 import 'package:reown_appkit/modal/services/magic_service/i_magic_service.dart';
 import 'package:reown_appkit/modal/services/magic_service/magic_service.dart';
 import 'package:reown_appkit/modal/services/magic_service/models/magic_data.dart';
 import 'package:reown_appkit/modal/services/magic_service/models/magic_events.dart';
+import 'package:reown_appkit/modal/services/network_service/i_network_service.dart';
+import 'package:reown_appkit/modal/services/network_service/network_service.dart';
+import 'package:reown_appkit/modal/services/phantom_service/i_phantom_service.dart';
+import 'package:reown_appkit/modal/services/phantom_service/models/phantom_events.dart';
+import 'package:reown_appkit/modal/services/phantom_service/phantom_service.dart';
+import 'package:reown_appkit/modal/services/siwe_service/i_siwe_service.dart';
 import 'package:reown_appkit/modal/services/siwe_service/siwe_service.dart';
-import 'package:reown_appkit/modal/services/blockchain_service/blockchain_service.dart';
-import 'package:reown_appkit/modal/i_appkit_modal_impl.dart';
+import 'package:reown_appkit/modal/services/third_party_wallet_service.dart';
+import 'package:reown_appkit/modal/services/toast_service/i_toast_service.dart';
+import 'package:reown_appkit/modal/services/toast_service/models/toast_message.dart';
+import 'package:reown_appkit/modal/services/toast_service/toast_service.dart';
+import 'package:reown_appkit/modal/services/uri_service/i_url_utils.dart';
+import 'package:reown_appkit/modal/services/uri_service/launch_url_exception.dart';
+import 'package:reown_appkit/modal/services/uri_service/url_utils.dart';
+import 'package:reown_appkit/modal/utils/core_utils.dart';
+import 'package:reown_appkit/modal/utils/platform_utils.dart';
 import 'package:reown_appkit/modal/widgets/modal_container.dart';
 import 'package:reown_appkit/modal/widgets/modal_provider.dart';
+import 'package:reown_appkit/modal/widgets/widget_stack/i_widget_stack.dart';
+import 'package:reown_appkit/modal/widgets/widget_stack/widget_stack.dart';
+import 'package:reown_appkit/reown_appkit.dart';
+import 'package:reown_core/pairing/utils/json_rpc_utils.dart';
+import 'package:reown_core/store/i_store.dart';
 
 /// Either a [projectId] and [metadata] must be provided or an already created [appKit].
 /// optionalNamespaces is mostly not needed, if you use it, the values set here will override every optionalNamespaces set in evey chain
@@ -718,7 +716,7 @@ class ReownAppKitModal
   }
 
   @override
-  Future<void> openModalView([Widget? startWidget]) {
+  Future<void> openModalView([Widget? startWidget, BuildContext? context]) {
     final keyString = startWidget?.key?.toString() ?? '';
     final smartAccounts = _currentSession?.sessionSmartAccounts;
     final isMagic = _currentSession?.sessionService.isMagic == true;
@@ -742,7 +740,7 @@ class ReownAppKitModal
         startWidget = null;
       }
     }
-    return _showModalView(startWidget: startWidget);
+    return _showModalView(startWidget: startWidget, context: context);
   }
 
   final List<Key> _allowedScreensWhenConnected = [
